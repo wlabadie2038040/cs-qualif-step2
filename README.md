@@ -1,5 +1,10 @@
 # CS Qualif Step 2 - Device Management API
 
+## Stories done
+1. Enregistrement d'un appareil TV
+   - All done, just need to handle the last exception
+     - 🔴 400 Bad Request - Valeur de firmwareVersion, location ou timezone non supporté
+
 ## Prerequisites
 
 ```bash
