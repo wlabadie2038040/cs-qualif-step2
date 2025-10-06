@@ -1,6 +1,7 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
-class RegisterDeviceRequest(BaseModel):
+@dataclass
+class DeviceConfig:
     macAddress: str
     model: str
     firmwareVersion: str
