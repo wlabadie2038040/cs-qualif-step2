@@ -6,7 +6,11 @@
      - 🔴 400 Bad Request - Valeur de firmwareVersion, location ou timezone non supporté
 
 ## Prerequisites
-
+install poetry
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+or 
 ```bash
 pip install poetry
 ```
