@@ -6,8 +6,10 @@ from fastapi import APIRouter, status, Depends
 from fastapi.responses import JSONResponse
 
 from cs_qualif_step2.core.application.dto.device_config import DeviceConfig
+from cs_qualif_step2.core.application.dto.new_infos import NewInfos
 from cs_qualif_step2.config.get_device_service import get_device_service
 from cs_qualif_step2.core.api.dto.request.register_device_request import DeviceRegistrationRequest
+from cs_qualif_step2.core.api.dto.request.update_infos_request import UpdateInfosRequest
 from cs_qualif_step2.core.application.device_service import DeviceService
 
 device_router = APIRouter(
@@ -45,11 +47,36 @@ def get_config(
     device = device_service.get_config(device_id)
     if not device :
         return JSONResponse(
-        status_code=status.HTTP_404_NOT_FOUND,
-        content={}
-    )
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={}
+        )
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content={"device_id": device_id,
                  "device" : device.get_mac_address()}
     )
+
+@device_router.put("/{device_id}")
+def update_infos(
+    device_id,
+    update_infos_request: UpdateInfosRequest,
+    device_service: DeviceService = Depends(get_device_service)
+):
+    infos = NewInfos(
+        firmwareVersion=update_infos_request.firmwareVersion,
+        displayName=update_infos_request.displayName,
+        location=update_infos_request.location,
+        timezone=update_infos_request.timezone
+    )
+    device = device_service.get_config(device_id)
+    if not device :
+        return JSONResponse(
+            status_code=status.HTTP_404_NOT_FOUND,
+            content={}
+        )
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"device_id": device_id,
+                 "device" : device.get_mac_address()}
+    )
+    
