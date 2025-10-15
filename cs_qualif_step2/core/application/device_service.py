@@ -23,4 +23,6 @@ class DeviceService:
 
         return str(device.get_device_id())
     
-    #def get_device(self, device_id):
+    def get_config(self, device_id):
+        found_device = self.device_repository.find_by_id(device_id)
+        return found_device

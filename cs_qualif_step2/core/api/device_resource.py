@@ -1,5 +1,6 @@
 from http.client import HTTPResponse
 import hashlib
+import json
 
 from fastapi import APIRouter, status, Depends
 from fastapi.responses import JSONResponse
@@ -37,8 +38,13 @@ def register_device(
     )
 
 @device_router.get("/{device_id}/config")
-def get_config(device_id):
+def get_config(
+    device_id,
+    device_service: DeviceService = Depends(get_device_service)
+    ):
+    device = device_service.get_config(device_id)
     return JSONResponse(
         status_code=status.HTTP_200_OK,
-        content={"device_id": device_id}
+        content={"device_id": device_id,
+                 "device" : device.get_mac_address()}
     )
