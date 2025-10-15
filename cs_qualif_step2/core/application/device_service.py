@@ -2,6 +2,7 @@ import hashlib
 
 from cs_qualif_step2.core.domain.device.device_repository import DeviceRepository
 from cs_qualif_step2.core.application.dto.device_config import DeviceConfig
+from cs_qualif_step2.core.application.dto.new_infos import NewInfos
 from cs_qualif_step2.core.domain.device.devicefactory import DeviceFactory
 from cs_qualif_step2.core.domain.device.exception.device_with_same_mac_address_exception import \
     DeviceWithSameMacAddressException
@@ -26,3 +27,12 @@ class DeviceService:
     def get_config(self, device_id):
         found_device = self.device_repository.find_by_id(device_id)
         return found_device
+    
+    def update_infos(self, device_id, new_infos : NewInfos):
+        device = self.device_repository.find_by_id(device_id)
+        device.__firmwareVersion = new_infos.firmwareVersion
+        device.__displayName = new_infos.displayName
+        device.__location = new_infos.location
+        device.__timezone = new_infos.timezone
+        self.device_repository.save(device)
+        return

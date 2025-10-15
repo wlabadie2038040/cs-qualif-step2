@@ -74,6 +74,7 @@ def update_infos(
             status_code=status.HTTP_404_NOT_FOUND,
             content={}
         )
+    device_service.update_infos(device_id, infos)
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content={"device_id": device_id,
