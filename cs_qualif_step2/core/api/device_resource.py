@@ -35,3 +35,10 @@ def register_device(
         status_code=status.HTTP_200_OK,
         content={"device_id": device_id}
     )
+
+@device_router.get("/{device_id}/config")
+def get_config(device_id):
+    return JSONResponse(
+        status_code=status.HTTP_200_OK,
+        content={"device_id": device_id}
+    )
