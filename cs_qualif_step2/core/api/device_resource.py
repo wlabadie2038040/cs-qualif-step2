@@ -43,6 +43,11 @@ def get_config(
     device_service: DeviceService = Depends(get_device_service)
     ):
     device = device_service.get_config(device_id)
+    if not device :
+        return JSONResponse(
+        status_code=status.HTTP_404_NOT_FOUND,
+        content={}
+    )
     return JSONResponse(
         status_code=status.HTTP_200_OK,
         content={"device_id": device_id,
